@@ -1,0 +1,32 @@
+<html>
+    <script>
+        // Click from Browser Action Icon
+        chrome.browserAction.onClicked.addListener(function(tab) {
+            chrome.tabs.getAllInWindow(null, function(tabs) {
+                var isOpened = false;
+                var target_url = "https://plus.google.com/";
+                                       
+                for (var i = 0, n = tabs.length; i < n; i++) {
+                    var tab = tabs[i];
+                    if (tab.url.match(/plus.google.com/)) {
+                        chrome.tabs.update(tab.id, {selected: true});
+                        isOpened = true;
+                        break;
+                    }
+                }
+                if (!isOpened) {
+                    chrome.tabs.create({url: target_url, selected: true});
+                }
+            });
+        });
+
+        // Request from Content Script
+        chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+            if (request.type === "updateBadge") {
+                chrome.browserAction.setBadgeText({text:request.text})
+                sendResponse();
+            }
+        });
+    </script>
+</html>
+<!-- vim:set ts=4 sw=4 expandtab: -->
