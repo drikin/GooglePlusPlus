@@ -1,0 +1,28 @@
+{
+  "name": "Google+ Plus",
+  "version": "0.1",
+  "description": "Tiny helper extension for Google+",
+  "icons": {
+      "16": "icon16.png",
+      "48": "icon32.png"
+  },
+  "browser_action": {
+    "default_icon": "icon16.png",
+    "default_title": "Google+ Plus"
+  },
+  "background_page": "background.html",
+  "content_scripts": [
+  {
+      "matches": ["http://plus.google.com/*", "https://plus.google.com/*"],
+      "js": ["helper.js"],
+      "run_at": "document_end"
+  }
+  ],
+  "permissions": [
+    "tabs",
+    "notifications",
+    "http://plus.google.com/*",
+    "https://plus.google.com/*"
+  ],
+  "homepage_url": "https://github.com/drikin/GooglePlusPlus"
+}
