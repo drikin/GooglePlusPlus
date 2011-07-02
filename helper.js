@@ -17,6 +17,27 @@
         }
     }
 
+    var scrollTimeoutId = null;
+    function goTop() {
+        if (document.body.scrollTop != 0) {
+            window.scrollBy(0, -150);
+            scrollTimeoutId = setTimeout(goTop, 16);
+        } else {
+            if (scrollTimeoutId) {
+                clearTimeout(scrollTimeoutId);
+                scrollTimeoutId = null;
+            }
+        }
+    }
+
+    chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+        if(request["action"] === "scrollToTop") {
+            //window.scrollTo(0, 0);
+            goTop();
+        }
+        sendResponse();
+    });
+
 
     // Attach events
     // document.addEventListener("DOMNodeInserted", DOMNodeInserted, false);
